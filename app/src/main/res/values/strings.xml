@@ -1,3 +1,41 @@
 <resources>
-    <string name="app_name">W05-MyFirstIntent</string>
+    <string name="app_name">MyFoodSpots</string>
+
+    <!-- Spot 1 -->
+    <string name="spot1_name">Iceberg Bubble Team &amp; Fast Food</string>
+    <string name="spot1_location">307 Toorak Rd, South Yarra, VIC</string>
+    <string name="spot1_last_visit">2026/04/21</string>
+    <string name="spot1_description">Iceberg is a very lovely and cozy fast-food restaurant located in the middle of Toorak Rd. They specialise in a wide variety of bubble tea options, along with Asian styled food that is made fresh and fast, and handed to you along with a big welcoming smile.</string>
+    <string name="spot1_review">This is one of my absolute favourite spots close to me as its quick to get, the food is very filling and well priced, and the bubble tea is to die for (especially the slushy options on a hot day).</string>
+
+    <!-- Spot 2 -->
+    <string name="spot2_name">Sam\'s Cali Cantina</string>
+    <string name="spot2_location">760 Chapel St, South Yarra, VIC</string>
+    <string name="spot2_last_visit">2026/04/25</string>
+    <string name="spot2_description">Sam\'s is a very vibey restaurant located on the end of chapel towards Richmond. As hinted in the name, they serve mouth-watering California styled tacos and burgers that keep you coming back for more.</string>
+    <string name="spot2_review">When I am looking for a go to burger, this is where you will find me as they do it like no one else. They use to be a burger joint named Hello Sams, and I can not get over how good the burgers use to be before the redesign, however they still better than most now.</string>
+
+    <!-- Spot 3 -->
+    <string name="spot3_name">Hecho en Mexico</string>
+    <string name="spot3_location">Shop 7/478 Chapel St, South Yarra, VIC</string>
+    <string name="spot3_last_visit">2026/04/18</string>
+    <string name="spot3_description">Hecho en Mexico is very fun, and inviting Mexican styled restaurant that’s full of colours, delicious food, and a variety of drink options.</string>
+    <string name="spot3_review">My family and I always visit this restaurant when ever our parents come to visit as we always know what we are gonna get, delicious food that satisfies all hunger</string>
+
+    <!-- Spot 3 -->
+    <string name="spot4_name">Lamb on Chapel</string>
+    <string name="spot4_location">394 Chapel St, South Yarra, VIC</string>
+    <string name="spot4_last_visit">2026/04/23</string>
+    <string name="spot4_description">L.O.C, located in the heart of Chapel st, is a Greek, souvlaki fast-food restaurant that has been in business since the early 90s, and no other restaurant makes you walk in like they do with the smoke from the charcoal cooked lamb you can smell from all the way down the street.</string>
+    <string name="spot4_review">This spot is located just below where my grandparents live, so when I was younger, whenever we visited, we also paid L.O.C a visit too. Although the quality/taste has diminished since re-ownership, because of its long history with my family, it’s still a favourite and still go every month or so.</string>
+
+    <!-- UI Labels -->
+    <string name="label_rating">Rating</string>
+    <string name="label_last_visit">Last Visit</string>
+    <string name="label_location">Location</string>
+    <string name="label_review">My Review</string>
+    <string name="label_description">About</string>
+    <string name="label_visited">Visited</string>
+    <string name="btn_see_more">See more Details</string>
+    <string name="content_desc_image">Image of %1$s</string>
 </resources>

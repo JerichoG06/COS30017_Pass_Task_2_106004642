@@ -1,20 +1,188 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<!-- Main Screen: scrollable list of full-width food spot cards -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:background="#F5F5F5">
 
-    <ImageView
-        android:id="@+id/mainImage"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:contentDescription="waiting"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/waiting" />
+        android:orientation="vertical"
+        android:padding="12dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- Card: Spot 1 -->
+        <LinearLayout
+            android:id="@+id/cardSpot1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:background="@android:color/white"
+            android:elevation="4dp"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <ImageView
+                android:id="@+id/imgSpot1"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/app_name" />
+
+            <TextView
+                android:id="@+id/tvName1"
+                style="@style/SpotNameText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <RatingBar
+                android:id="@+id/ratingBar1"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:stepSize="0.5"
+                android:layout_marginTop="4dp" />
+
+            <Button
+                android:id="@+id/btnDetails1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_see_more"
+                android:layout_marginTop="8dp" />
+
+        </LinearLayout>
+
+        <!-- Card: Spot 2 -->
+        <LinearLayout
+            android:id="@+id/cardSpot2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:background="@android:color/white"
+            android:elevation="4dp"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <ImageView
+                android:id="@+id/imgSpot2"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/app_name" />
+
+            <TextView
+                android:id="@+id/tvName2"
+                style="@style/SpotNameText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <RatingBar
+                android:id="@+id/ratingBar2"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:stepSize="0.5"
+                android:layout_marginTop="4dp" />
+
+            <Button
+                android:id="@+id/btnDetails2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_see_more"
+                android:layout_marginTop="8dp" />
+
+        </LinearLayout>
+
+        <!-- Card: Spot 3 -->
+        <LinearLayout
+            android:id="@+id/cardSpot3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:background="@android:color/white"
+            android:elevation="4dp"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <ImageView
+                android:id="@+id/imgSpot3"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/app_name" />
+
+            <TextView
+                android:id="@+id/tvName3"
+                style="@style/SpotNameText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <RatingBar
+                android:id="@+id/ratingBar3"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:stepSize="0.5"
+                android:layout_marginTop="4dp" />
+
+            <Button
+                android:id="@+id/btnDetails3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_see_more"
+                android:layout_marginTop="8dp" />
+
+        </LinearLayout>
+
+        <!-- Card: Spot 4 -->
+        <LinearLayout
+            android:id="@+id/cardSpot4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:background="@android:color/white"
+            android:elevation="4dp"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <ImageView
+                android:id="@+id/imgSpot4"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/app_name" />
+
+            <TextView
+                android:id="@+id/tvName4"
+                style="@style/SpotNameText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <RatingBar
+                android:id="@+id/ratingBar4"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:stepSize="0.5"
+                android:layout_marginTop="4dp" />
+
+            <Button
+                android:id="@+id/btnDetails4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_see_more"
+                android:layout_marginTop="8dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>
