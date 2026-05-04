@@ -8,13 +8,14 @@ import kotlinx.parcelize.Parcelize
  * Implements Parcelable so they can be passes between activities via Intents
  *
  * @param name          Display name of spot
- * @param location          Address string
+ * @param location      Address string
  * @param lastVisit     Date of my last visit (formatted string)
  * @param rating        Rating out of 5.0
  * @param description   short description of the spot
  * @param review        My Personal review
  * @param imageResID    Drawable resource ID for the spot's image
  * @param hasVisited    Whether I've visited this place (shown with a switch)
+ * @param accentColor   Color to match each spot
  */
 @Parcelize
 data class FoodSpot(
@@ -25,5 +26,6 @@ data class FoodSpot(
     val description: String,
     val review: String,
     val imageResId: Int,
-    val hasVisited: Boolean
+    val hasVisited: Boolean,
+    val accentColor: Int
 ) : Parcelable

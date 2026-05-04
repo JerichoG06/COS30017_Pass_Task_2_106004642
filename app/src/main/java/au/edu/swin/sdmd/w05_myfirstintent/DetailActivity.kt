@@ -1,5 +1,6 @@
 package au.edu.swin.sdmd.w05_myfirstintent
 
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.RatingBar
@@ -23,13 +24,18 @@ class DetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_detail)
 
         // Retrieve Parcelable from incoming Intent
-        @Suppress("DEPRECATION")
+        @Suppress("DEPRECATION") //Hides outdated warning
         val spot: FoodSpot? = intent.getParcelableExtra(EXTRA_FOOD_SPOT)
 
         //If no data passed, close screen safely
         if (spot == null) {
             finish()
             return
+        }
+
+        supportActionBar?.apply {
+            title = spot.name
+            setBackgroundDrawable(ColorDrawable(spot.accentColor))
         }
 
         populateViews(spot)
@@ -47,9 +53,6 @@ class DetailActivity : AppCompatActivity() {
             it.setImageResource(spot.imageResId)
             it.contentDescription = getString(R.string.content_desc_image, spot.name)
         }
-
-        //Set action bar title to spot's name
-        supportActionBar?.title = spot.name
 
         //Populate all text fields
         findViewById<TextView>(R.id.detailName).text = spot.name

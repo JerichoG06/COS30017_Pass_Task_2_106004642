@@ -1,5 +1,8 @@
 <resources>
-    <string name="app_name">MyFoodSpots</string>
+    <string name="app_name">My Food Spots</string>
+
+    <!-- More Details Hint -->
+    <string name="tap_hint">Tap Food Spot Image for More Details</string>
 
     <!-- Spot 1 -->
     <string name="spot1_name">Iceberg Bubble Team &amp; Fast Food</string>

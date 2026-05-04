@@ -1,9 +1,8 @@
 package au.edu.swin.sdmd.w05_myfirstintent
 
 import android.content.Intent
-import android.media.Rating
+import android.graphics.Color
 import android.os.Bundle
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
@@ -28,11 +27,11 @@ class MainActivity : AppCompatActivity() {
         spots = buildSpotsList()
 
         // Bind each card to its correct FoodSpot
-        bindCard(R.id.imgSpot1, R.id.tvName1, R.id.ratingBar1, R.id.btnDetails1, spots[0])
-        bindCard(R.id.imgSpot2, R.id.tvName2, R.id.ratingBar2, R.id.btnDetails2, spots[1])
-        bindCard(R.id.imgSpot3, R.id.tvName3, R.id.ratingBar3, R.id.btnDetails3, spots[2])
-        bindCard(R.id.imgSpot4, R.id.tvName4, R.id.ratingBar4, R.id.btnDetails4, spots[3])
-        }
+        bindCard(R.id.imgSpot1, R.id.tvName1, R.id.ratingBar1, spots[0])
+        bindCard(R.id.imgSpot2, R.id.tvName2, R.id.ratingBar2, spots[1])
+        bindCard(R.id.imgSpot3, R.id.tvName3, R.id.ratingBar3, spots[2])
+        bindCard(R.id.imgSpot4, R.id.tvName4, R.id.ratingBar4, spots[3])
+    }
     /**
      * Builds and returns in-memory list of FoodSport objects
      * String values are pulled from resources to avoid hard-coded strings
@@ -46,7 +45,8 @@ class MainActivity : AppCompatActivity() {
             description = getString(R.string.spot1_description),
             review = getString(R.string.spot1_review),
             imageResId = R.drawable.spot1,
-            hasVisited = true
+            hasVisited = true,
+            accentColor = Color.parseColor("#2d8dfa")
         ),
         FoodSpot(
             name = getString(R.string.spot2_name),
@@ -56,7 +56,8 @@ class MainActivity : AppCompatActivity() {
             description = getString(R.string.spot2_description),
             review = getString(R.string.spot2_review),
             imageResId = R.drawable.spot2,
-            hasVisited = true
+            hasVisited = true,
+            accentColor = Color.parseColor("#e02702")
         ),
         FoodSpot(
             name = getString(R.string.spot3_name),
@@ -66,7 +67,8 @@ class MainActivity : AppCompatActivity() {
             description = getString(R.string.spot3_description),
             review = getString(R.string.spot3_review),
             imageResId = R.drawable.spot3,
-            hasVisited = true
+            hasVisited = true,
+            accentColor = Color.parseColor("#4705e3")
         ),
         FoodSpot(
             name = getString(R.string.spot4_name),
@@ -76,7 +78,8 @@ class MainActivity : AppCompatActivity() {
             description = getString(R.string.spot4_description),
             review = getString(R.string.spot4_review),
             imageResId = R.drawable.spot4,
-            hasVisited = true
+            hasVisited = true,
+            accentColor = Color.parseColor("#0c04b0")
         )
     )
 
@@ -87,14 +90,12 @@ class MainActivity : AppCompatActivity() {
      * @param imageId   Resource ID of card's ImageView
      * @param nameId    Resource ID of card's name TextView
      * @param ratingId  Resource ID of card's RatingBar
-     * @param buttonId  Resource ID of card's Button
      * @param spot      FoodSpot data to display on this card
      */
     private fun bindCard(
         imageId: Int,
         nameId: Int,
         ratingId: Int,
-        buttonId: Int,
         spot: FoodSpot
     ){
         findViewById<ImageView>(imageId).apply {
@@ -108,14 +109,6 @@ class MainActivity : AppCompatActivity() {
         }
         findViewById<TextView>(nameId).text = spot.name
         findViewById<RatingBar>(ratingId).rating = spot.rating
-
-        // Button to launch DetailActivity and pass FoodSpot as Parcelable
-        findViewById<Button>(buttonId).setOnClickListener {
-            val intent = Intent(this, DetailActivity::class.java).apply {
-                putExtra(DetailActivity.EXTRA_FOOD_SPOT, spot)
-            }
-            startActivity(intent)
-        }
     }
 
 }

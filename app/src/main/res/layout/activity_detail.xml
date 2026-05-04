@@ -34,6 +34,7 @@
 
             <!-- Location -->
             <TextView
+                android:id="@+id/labelLocation"
                 style="@style/DetailSectionLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -48,6 +49,7 @@
 
             <!-- Rating -->
             <TextView
+                android:id="@+id/labelRating"
                 style="@style/DetailSectionLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -65,6 +67,7 @@
 
             <!-- Last Visit -->
             <TextView
+                android:id="@+id/labelLastVisit"
                 style="@style/DetailSectionLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -78,6 +81,7 @@
 
             <!-- Visited Switch -->
             <TextView
+                android:id="@+id/labelVisited"
                 style="@style/DetailSectionLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -92,6 +96,7 @@
 
             <!-- About -->
             <TextView
+                android:id="@+id/labelDescription"
                 style="@style/DetailSectionLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -107,6 +112,7 @@
 
             <!-- Personal Review -->
             <TextView
+                android:id="@+id/labelReview"
                 style="@style/DetailSectionLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
