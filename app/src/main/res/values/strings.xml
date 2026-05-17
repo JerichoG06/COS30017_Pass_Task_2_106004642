@@ -41,4 +41,20 @@
     <string name="label_visited">Visited</string>
     <string name="btn_see_more">See more Details</string>
     <string name="content_desc_image">Image of %1$s</string>
+
+    <!-- Validation errors -->
+    <string name="error_name_empty">Name cannot be empty</string>
+    <string name="error_location_empty">Location cannot be empty</string>
+    <string name="error_review_short">Review must be at least 10 characters</string>
+    <string name="error_date_invalid">Date must be in format YYYY/MM/DD</string>
+
+    <!-- Snackbar -->
+    <string name="snackbar_updated">%1$s has been updated</string>
+
+    <!-- Date picker hint -->
+    <string name="hint_tap_date">Tap to pick a date</string>
+
+    <!-- Form labels -->
+    <string name="label_name">Name</string>
+    <string name="label_edit_review">Your Review</string>
 </resources>

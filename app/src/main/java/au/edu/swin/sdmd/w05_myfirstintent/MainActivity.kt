@@ -6,35 +6,74 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
 
 /**
- * Main Activity: displays a 2x2 grid of food spots cards
- * Each card shows: image, name, rating, and see more details button
- * Tapping the button launches DetailActivity with the spot's data as a Parcelable
+ * Main Activity: displays a scrollable list of food spot cards
+ * Each card shows: image, name, rating
+ * Tapping the image launches DetailActivity for editing
+ * On return, updates the in-memory list and refreshes the card
  */
 
 class MainActivity : AppCompatActivity() {
 
-    // In-memory list of food spots - no disk storage used
-    private lateinit var spots: List<FoodSpot>
+    // In-memory list of food spots - mutable so edits can be applied
+    private val spots = mutableListOf<FoodSpot>()
+    // Root view used to anchor the Snackbar
+    private lateinit var rootView: android.view.View
+
+    /**
+     * ActivityResultLauncher replaces startActivityForResult
+     * Handles the result returned from DetailActivity when the user presses back
+     */
+    private val detailLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == android.app.Activity.RESULT_OK) {
+            val data = result.data ?: return@registerForActivityResult
+
+            // Retrieve updated spot and which index it belongs to
+            @Suppress("DEPRECATION")
+            val updatedSpot = data.getParcelableExtra<FoodSpot>(
+                DetailActivity.EXTRA_FOOD_SPOT
+            ) ?: return@registerForActivityResult
+            val index = data.getIntExtra(DetailActivity.EXTRA_SPOT_INDEX, 0)
+
+            // Update in-memory list
+            spots[index] = updatedSpot
+
+            // Refresh specific card that was edited
+            refreshCard(index)
+
+            // Show Snackbar confirming update
+            Snackbar.make(
+                rootView,
+                getString(R.string.snackbar_updated, updatedSpot.name),
+                Snackbar.LENGTH_LONG
+            ).show()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Build in-memory data list
-        spots = buildSpotsList()
+        rootView = findViewById(android.R.id.content)
+
+        // Populate in-memory list on first creation
+        spots.addAll(buildSpotsList())
 
         // Bind each card to its correct FoodSpot
-        bindCard(R.id.imgSpot1, R.id.tvName1, R.id.ratingBar1, spots[0])
-        bindCard(R.id.imgSpot2, R.id.tvName2, R.id.ratingBar2, spots[1])
-        bindCard(R.id.imgSpot3, R.id.tvName3, R.id.ratingBar3, spots[2])
-        bindCard(R.id.imgSpot4, R.id.tvName4, R.id.ratingBar4, spots[3])
+        bindCard(R.id.imgSpot1, R.id.tvName1, R.id.ratingBar1,0)
+        bindCard(R.id.imgSpot2, R.id.tvName2, R.id.ratingBar2, 1)
+        bindCard(R.id.imgSpot3, R.id.tvName3, R.id.ratingBar3, 2)
+        bindCard(R.id.imgSpot4, R.id.tvName4, R.id.ratingBar4, 3)
     }
     /**
-     * Builds and returns in-memory list of FoodSport objects
-     * String values are pulled from resources to avoid hard-coded strings
+     * Builds initial in-memory list of FoodSpot objects
+     * String values pulled from resources to avoid hard-coded strings
      */
     private fun buildSpotsList(): List<FoodSpot> = listOf(
         FoodSpot(
@@ -84,31 +123,51 @@ class MainActivity : AppCompatActivity() {
     )
 
     /**
-     * Binds card's views to a FoodSpot and wires up the detail button
+     * Binds card's views to the spot at the given index
      * Extracted to avoid repeated code across all four cards
      *
      * @param imageId   Resource ID of card's ImageView
      * @param nameId    Resource ID of card's name TextView
      * @param ratingId  Resource ID of card's RatingBar
-     * @param spot      FoodSpot data to display on this card
+     * @param index     Index of the spot in the in-memory list
      */
     private fun bindCard(
         imageId: Int,
         nameId: Int,
         ratingId: Int,
-        spot: FoodSpot
+        index: Int
     ){
+        val spot = spots[index]
         findViewById<ImageView>(imageId).apply {
             setImageResource(spot.imageResId)
-            //Clicking the image launches detail screen
+            // Pass both the spot and its index so DetailActivity can return to right position
             setOnClickListener {
-                startActivity(Intent(this@MainActivity, DetailActivity::class.java).apply {
-                    putExtra(DetailActivity.EXTRA_FOOD_SPOT, spot)
-                })
+                detailLauncher.launch(
+                    Intent(this@MainActivity, DetailActivity::class.java).apply {
+                        putExtra(DetailActivity.EXTRA_FOOD_SPOT, spot)
+                        putExtra(DetailActivity.EXTRA_SPOT_INDEX, index)
+                    }
+                )
             }
         }
         findViewById<TextView>(nameId).text = spot.name
-        findViewById<RatingBar>(ratingId).rating = spot.rating
+        findViewById<RatingBar>(ratingId).rating - spot.rating
+    }
+
+    /**
+     * Refreshes a single card after it's been edited
+     * Maps the index to the correct view IDs and rebinds
+     *
+     * @param index Index of updated spot in the in-memory list
+     */
+    private fun refreshCard(index: Int) {
+        val (imageId, nameId, ratingId) = when (index) {
+            0 -> Triple(R.id.imgSpot1, R.id.tvName1, R.id.ratingBar1)
+            1 -> Triple(R.id.imgSpot2, R.id.tvName2, R.id.ratingBar2)
+            2 -> Triple(R.id.imgSpot3, R.id.tvName3, R.id.ratingBar3)
+            else -> Triple(R.id.imgSpot4, R.id.tvName4, R.id.ratingBar4)
+        }
+        bindCard(imageId, nameId, ratingId, index)
     }
 
 }
