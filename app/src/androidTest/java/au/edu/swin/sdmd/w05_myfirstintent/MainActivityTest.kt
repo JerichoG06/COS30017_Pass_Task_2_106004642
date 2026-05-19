@@ -68,7 +68,7 @@ class MainActivityTest {
     }
 
     /**
-     * Test 4: Clearing the location field and pressing back should show location error
+     * Test 3: Clearing the location field and pressing back should show location error
      */
     @Test
     fun emptyLocation_showsValidationError() {
