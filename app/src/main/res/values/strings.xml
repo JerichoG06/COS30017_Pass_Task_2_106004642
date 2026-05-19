@@ -50,6 +50,7 @@
 
     <!-- Snackbar -->
     <string name="snackbar_updated">%1$s has been updated</string>
+    <string name="snackbar_undo">UNDO</string>
 
     <!-- Date picker hint -->
     <string name="hint_tap_date">Tap to pick a date</string>

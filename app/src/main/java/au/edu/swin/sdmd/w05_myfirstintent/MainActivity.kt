@@ -41,18 +41,23 @@ class MainActivity : AppCompatActivity() {
             ) ?: return@registerForActivityResult
             val index = data.getIntExtra(DetailActivity.EXTRA_SPOT_INDEX, 0)
 
-            // Update in-memory list
-            spots[index] = updatedSpot
+            // Store previous spot so undo can revert to it
+            val previousSpot = spots[index]
 
-            // Refresh specific card that was edited
+            // Update in-memory list and refresh card
+            spots[index] = updatedSpot
             refreshCard(index)
 
-            // Show Snackbar confirming update
+            // Show Snackbar confirming update and option to UNDO
             Snackbar.make(
                 rootView,
                 getString(R.string.snackbar_updated, updatedSpot.name),
                 Snackbar.LENGTH_LONG
-            ).show()
+            ).setAction(getString(R.string.snackbar_undo)) {
+                // Revert to previous spot data and refresh card again
+                spots[index] = previousSpot
+                refreshCard(index)
+            }.show()
         }
     }
 
