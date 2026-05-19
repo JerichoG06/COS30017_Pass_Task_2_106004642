@@ -151,7 +151,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         findViewById<TextView>(nameId).text = spot.name
-        findViewById<RatingBar>(ratingId).rating - spot.rating
+        findViewById<RatingBar>(ratingId).rating = spot.rating
     }
 
     /**

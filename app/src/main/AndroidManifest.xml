@@ -21,7 +21,6 @@
         </activity>
         <!-- Detail screen, with back navigation to MainActivity -->
         <activity android:name=".DetailActivity"
-            android:parentActivityName=".MainActivity"
             android:exported="false" />
 
     </application>

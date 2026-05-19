@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.Switch
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import java.util.Calendar
 
@@ -45,6 +46,8 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         // Retrieve Parcelable and list index from Intent
         @Suppress("DEPRECATION") //Hides outdated warning
         originalSpot = intent.getParcelableExtra(EXTRA_FOOD_SPOT) ?: run {
@@ -52,6 +55,12 @@ class DetailActivity : AppCompatActivity() {
             return
         }
         spotIndex = intent.getIntExtra(EXTRA_SPOT_INDEX, 0)
+
+        // Apply accent color and spot name to action bar
+        supportActionBar?.apply {
+            title = originalSpot.name
+            setBackgroundDrawable(ColorDrawable(originalSpot.accentColor))
+        }
 
         // Bind all views
         bindViews()
@@ -61,6 +70,36 @@ class DetailActivity : AppCompatActivity() {
 
         // Wire up the date picker to the last visit field
         setupDatePicker()
+
+        // Register back press handler using OnBackPressedCallback - validates before saving
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                // Only save and go back if all fields pass validation
+                if (validateFields()) {
+                    // Build updated FoodSpot from current form values
+                    val updatedSpot = originalSpot.copy(
+                        name = editName.text.toString().trim(),
+                        location = editLocation.text.toString().trim(),
+                        lastVisit = editLastVisit.text.toString().trim(),
+                        rating = ratingBar.rating,
+                        review = editReview.text.toString().trim(),
+                        hasVisited = visitedSwitch.isChecked
+                    )
+
+                    // Returned updated spot and index back to MainActivity
+                    val resultIntent = Intent().apply {
+                        putExtra(EXTRA_FOOD_SPOT, updatedSpot)
+                        putExtra(EXTRA_SPOT_INDEX, spotIndex)
+                    }
+                    setResult(Activity.RESULT_OK, resultIntent)
+
+                    // Disable  callback so the system back press fires normally
+                    isEnabled = false
+                    onBackPressedDispatcher.onBackPressed()
+                }
+            }
+            // If validation fails, stay on screen - errors shown inline
+        })
     }
 
     /**
@@ -110,14 +149,15 @@ class DetailActivity : AppCompatActivity() {
      */
     private fun setupDatePicker() {
         editLastVisit.setOnClickListener {
-            // Parse existing date to pre-select it in the picker
-            val parts = originalSpot.lastVisit.split("/")
+            // Read from current field text (not originalSpot) so
+            // re-picking after a change starts from last picked date
+            val parts = editLastVisit.text.toString().split("/")
             val calendar = Calendar.getInstance().apply {
                 if (parts.size == 3) {
                     set(
-                        parts[0].toIntOrNull() ?: get(Calendar.YEAR),
+                        parts[2].toIntOrNull() ?: get(Calendar.YEAR),
                         (parts[1].toIntOrNull() ?: get(Calendar.MONTH) + 1) - 1,
-                        parts[2].toIntOrNull() ?: get(Calendar.DAY_OF_MONTH)
+                        parts[0].toIntOrNull() ?: get(Calendar.DAY_OF_MONTH)
                     )
                 }
             }
@@ -125,7 +165,7 @@ class DetailActivity : AppCompatActivity() {
             DatePickerDialog(
                 this,
                 { _, year, month, day ->
-                    val formatted = "%04d/%02d/%02d".format(year,month + 1, day)
+                    val formatted = "%02d/%02d/%04d".format(day,month + 1, year)
                     editLastVisit.setText(formatted)
                     errorDate.visibility = View.GONE
                 },
@@ -133,34 +173,6 @@ class DetailActivity : AppCompatActivity() {
                 calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH)
             ).show()
-        }
-    }
-
-    /**
-     * Intercepts back button press
-     * Validates all fields - if valid, packages the updated spot and
-     * returns it to MainActivity. If invalid, shows inline errors and stays
-     */
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-        if (validateFields()) {
-            // Build updated FoodSpot from current form values
-            val updatedSpot = originalSpot.copy(
-                name = editName.text.toString().trim(),
-                location = editLocation.text.toString().trim(),
-                lastVisit = editLastVisit.text.toString().trim(),
-                rating = ratingBar.rating,
-                review = editReview.text.toString().trim(),
-                hasVisited = visitedSwitch.isChecked
-            )
-
-            // Return updated spot and its index back to MainActivity
-            val resultIntent = Intent().apply {
-                putExtra(EXTRA_FOOD_SPOT, updatedSpot)
-                putExtra(EXTRA_SPOT_INDEX, spotIndex)
-            }
-            setResult(Activity.RESULT_OK, resultIntent)
-            super.onBackPressed()
         }
     }
 
@@ -192,7 +204,7 @@ class DetailActivity : AppCompatActivity() {
         }
 
         // Date must match YYYY/MM/DD format
-        val dateRegex = Regex("""\d{4}/\d{2}/\d{2}""")
+        val dateRegex = Regex("""\d{2}/\d{2}/\d{4}""")
         if (!dateRegex.matches(editLastVisit.text.toString().trim())) {
             errorDate.text = getString(R.string.error_date_invalid)
             errorDate.visibility = View.VISIBLE
@@ -211,5 +223,10 @@ class DetailActivity : AppCompatActivity() {
         }
 
         return isValid
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressedDispatcher.onBackPressed()
+        return true
     }
 }
